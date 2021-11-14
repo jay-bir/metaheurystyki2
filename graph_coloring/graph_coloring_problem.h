@@ -14,7 +14,7 @@ double goal_function(Graph g) {
 		if (a != b)
 			cost += ((a - b) * (a - b)) + a + b;
 		else
-			cost += 10.0 * g.vertices.size();
+			cost += 10.0 * g.edges.size();
 	}
 	return cost;
 }
@@ -74,11 +74,32 @@ Graph bruteForce(Graph g) {
 	unsigned long long upperBound = std::pow(g.vertices.size(), g.vertices.size());
 	std::cout << std::endl << upperBound << std::endl;
 	while (upperBound-- > 0) {
-		if (isColoredCorrectly(g))
+		if (isColoredCorrectly(g)) {
+			std::cout << std::endl << upperBound << std::endl;
 			return g;
+		}
 		g = next_coloring(g);
 	}
 	return g;
+}
+
+Graph bruteForce2(Graph g) {
+	unsigned long long upperBound = std::pow(g.vertices.size(), g.vertices.size());
+	std::cout << std::endl << upperBound << std::endl;
+	Graph best_coloring = g;
+	double best_cost = goal_function(best_coloring);
+	while (upperBound-- > 0) {
+		double cur_cost = goal_function(g);
+		if (cur_cost < best_cost) {
+			//std::cout << std::endl << upperBound << std::endl;
+			best_coloring = g;
+			best_cost = cur_cost;
+			std::cout << best_cost << std::endl;
+			g.printGraphVizStruct();
+		}
+		g = next_coloring(g);
+	}
+	return best_coloring;
 }
 
 

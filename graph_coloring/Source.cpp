@@ -6,7 +6,7 @@
 int main() {
 	Graph g(10);
 	//g.load_graph_from_file("graph.txt");
-	g.vertices = generate_random_coloring(g, 3);
+	//g.vertices = generate_random_coloring(g, 3);
 	for (auto e : g.edges) {
 		std::cout << e[0] << "  =====  " << e[1] << std::endl;
 	}
@@ -28,9 +28,9 @@ int main() {
 	//double cost = goal_function(g);
 	//std::cout << "Cost of current colored graph: " << cost << std::endl;
 	//std::cout << g << std::endl;
-	g = bruteForce(g);
+	g = bruteForce2(g);
 	g.printGraphVizStruct();
-	std::cout<< std::endl << g << std::endl;
+	std::cout<< std::endl << g << std::endl << goal_function(g)<< std::endl;
 
 	return 0;
 }

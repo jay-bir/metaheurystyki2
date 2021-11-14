@@ -10,7 +10,7 @@ Graph::Graph(int vertex_n) {
 	std::uniform_int_distribution<> edge_prob(0, 1);
 	for (int i = 0; i < vertex_n; i++) {
 		this->vertices.push_back(1);
-		for (int j = 0; j < vertex_n; j++) {
+		for (int j = i; j < vertex_n; j++) {
 			if (edge_prob(mt_generator) && i != j) {
 				std::array<int, 2> edge;
 				edge[0] = i;
@@ -81,7 +81,7 @@ void Graph::printGraphVizStruct() {
 		std::cout << "\t" << e[0] << " -- " << e[1] << ";" << std::endl;
 	}
 	for (int i = 0; i < vertices.size(); i++) {
-		std::cout << "\t" << i << " [color=" << colors[vertices[i]] << ",style=filled];" << std::endl;
+		std::cout << "\t" << i << " [color=" << colors[vertices[i] - 1] << ",style=filled];" << std::endl;
 	}
 	std::cout << "}";
 }
