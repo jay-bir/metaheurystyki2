@@ -86,6 +86,11 @@ void Graph::printGraphVizStruct() {
 	std::cout << "}";
 }
 
+void Graph::setVertices(std::vector<int> v)
+{
+	this->vertices = v;
+}
+
 
 inc_matrix_graph_t transpose_graph_matrix(inc_matrix_graph_t g) {
 	inc_matrix_graph_t gT;

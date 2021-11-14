@@ -24,6 +24,7 @@ public:
 	void load_graph_from_file(std::string path);
 	inc_matrix_graph_t toInMatrix();
 	void printGraphVizStruct();
+	void setVertices(std::vector<int> v);
 	Graph(int vertex_n);
 	Graph();
 };

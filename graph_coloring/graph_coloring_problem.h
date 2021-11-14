@@ -33,21 +33,53 @@ std::vector<int> generate_random_coloring(Graph g, int max_colors) {
 	}
 	return colored_vertices;
 }
+//wrong!!!!
+//Graph generate_random_neighbor(Graph g) {
+//	std::random_device rd;
+//	std::mt19937 mt_generator(rd());
+//	std::uniform_int_distribution<int> distr(-1, 1);
+//	for (auto &v : g.vertices) {
+//		v = (v + distr(mt_generator))%g.vertices.size();
+//		if (v == 0)
+//			++v;
+//	}
+//	return g;
+//}
+std::vector<Graph> better_neighbors(std::vector<Graph> neighborhood, Graph g) {
+	std::vector<Graph> b_neighbors;
+	const double cost_g = goal_function(g);
+	for (auto n : neighborhood) {
+		if (goal_function(n) < cost_g)
+			b_neighbors.push_back(n);
+	}
+	return b_neighbors;
+}
+
+Graph get_random_better_neighbor(std::vector<Graph> b_neighborhood) {
+	if (b_neighborhood.empty())
+		return Graph();
+	std::random_device rd;
+	std::mt19937 mt_generator(rd());
+	std::uniform_int_distribution<int> distr(0, b_neighborhood.size() -1);
+	return b_neighborhood[distr(mt_generator)];
+}
+
+std::vector<Graph> generate_neighborhood(Graph g) {
+	std::vector<Graph> neighborhood;
+	for (int i = 0; i < g.vertices.size(); i++) {
+		Graph n1 = g;
+		Graph n2 = g;
+		n1.vertices[i] = n1.vertices[i] % n1.vertices.size() + 1;
+		n2.vertices[i] -= 1;
+		if (n2.vertices[i] == 0)
+			n2.vertices[i] = n2.vertices.size();
+		neighborhood.push_back(n1);
+		neighborhood.push_back(n2);
+	}
+	return neighborhood;
+}
 
 Graph next_coloring(Graph g) {
-	//for (auto v : g.vertices) {
-	//	std::cout << "som wierzcholki" << std::endl;
-	//	if (v == g.vertices.size()){
-	//		std::cout << g.vertices.size() << std::endl;
-	//		v = 1;
-	//	}
-	//	else {
-	//		
-	//		++v;
-	//		std::cout << g.vertices.size() << "====" << v << std::endl;
-	//		break;
-	//	}
-	//}
 	for (int i = 0; i < g.vertices.size(); i++) {
 		if (g.vertices[i] == g.vertices.size()) {
 			g.vertices[i] = 1;
@@ -95,7 +127,7 @@ Graph bruteForce2(Graph g) {
 			best_coloring = g;
 			best_cost = cur_cost;
 			std::cout << best_cost << std::endl;
-			g.printGraphVizStruct();
+			//g.printGraphVizStruct();
 		}
 		g = next_coloring(g);
 	}
