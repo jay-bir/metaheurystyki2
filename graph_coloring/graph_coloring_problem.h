@@ -85,7 +85,6 @@ Graph next_coloring(Graph g) {
 			g.vertices[i] = 1;
 		}
 		else {
-
 			++g.vertices[i];
 			break;
 		}

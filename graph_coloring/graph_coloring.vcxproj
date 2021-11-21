@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Graph.h" />
     <ClInclude Include="graph_coloring_problem.h" />
+    <ClInclude Include="tabu_search.h" />
     <ClInclude Include="hill_climb.h" />
   </ItemGroup>
   <ItemGroup>

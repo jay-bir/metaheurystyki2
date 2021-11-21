@@ -24,6 +24,9 @@
     <ClInclude Include="hill_climb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tabu_search.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graph.cpp">

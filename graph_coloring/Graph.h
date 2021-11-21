@@ -35,4 +35,6 @@ std::ostream& operator<<(std::ostream& o, inc_matrix_graph_t g);
 
 std::ostream& operator<<(std::ostream& o, Graph ig);
 
+bool operator < (const Graph& g1, const Graph& g2);
+
 #endif
