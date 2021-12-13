@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="genetic_algorithm.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="graph_coloring_problem.h" />
     <ClInclude Include="tabu_search.h" />

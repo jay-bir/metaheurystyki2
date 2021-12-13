@@ -5,6 +5,7 @@
 #include "graph_coloring_problem.h"
 #include "hill_climb.h"
 #include "tabu_search.h"
+#include "genetic_algorithm.h"
 
 int main() {
 	Graph g(8);
@@ -50,15 +51,47 @@ int main() {
 	tabus_solution.printGraphVizStruct();
 
 
+// GENETIC ALGORITHM
+
+	std::vector<Graph> start_population;
+	for (int i = 0; i < 10; i++) {
+		Graph ga = g;
+		ga.setVertices(generate_random_coloring(ga, 4));
+		start_population.push_back(ga);
+
+		std::cout << "FIT:   " << fit_func(ga) << std::endl
+			<< "GOAL:   " << goal_function(ga) << std::endl;
+		ga.printGraphVizStruct();
+
+	}
+
+	std::cout << std::endl << "GENETIC ALGORITHM" << std::endl;
+	std::vector<Graph> end_pop = genetic_algorithm(
+		1000, 0.1, 0.3, start_population,
+		fit_func,
+		roulette_selection,
+		one_point_crossover,
+		uniform_mutation, [](int i){
+		return !(i > 0);
+	});
+
+	for (auto p : end_pop) {
+		std::cout << "FIT:   " << fit_func(p) << std::endl
+			<< "GOAL:   " << goal_function(p) << std::endl;
+		p.printGraphVizStruct();
+	}
+
+
+
 //============BRUTE FORCE
-	std::cout << std::endl << "BRUTE FORCE" << std::endl;
-	start = std::chrono::steady_clock::now();
-	Graph best_solution = bruteForce2(bf_g);
-	finish = std::chrono::steady_clock::now();
-	duration = finish - start;
-	std::cout << "TIME: " << duration.count() << std::endl
-		<< "COST: " << goal_function(best_solution) << std::endl;
-	best_solution.printGraphVizStruct();
+	//std::cout << std::endl << "BRUTE FORCE" << std::endl;
+	//start = std::chrono::steady_clock::now();
+	//Graph best_solution = bruteForce2(bf_g);
+	//finish = std::chrono::steady_clock::now();
+	//duration = finish - start;
+	//std::cout << "TIME: " << duration.count() << std::endl
+	//	<< "COST: " << goal_function(best_solution) << std::endl;
+	//best_solution.printGraphVizStruct();
 	
 
 	return 0;

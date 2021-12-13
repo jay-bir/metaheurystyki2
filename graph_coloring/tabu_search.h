@@ -20,11 +20,15 @@ Graph tabu_search(std::function<double(Graph)> cost,
 
 	auto p = best_p;
 	for (int i = 0; i < n; i++) {
+		std::cout << "iteration: " << i << std::endl;
+
 		auto neighbors = neighborhood(best_p);
 		neighbors.erase(std::remove_if(neighbors.begin(), neighbors.end(),
 			[&](auto g) {
 				return tabu_set.count(g);
 			}), neighbors.end());
+
+		std::cout << "size of neighbors: " << neighbors.size() << std::endl;
 		
 		if (neighbors.size() == 0)
 			break;
@@ -33,8 +37,10 @@ Graph tabu_search(std::function<double(Graph)> cost,
 			return cost(a) > cost(b);
 			});
 
-		tabu_set.insert(p);
-		tabu_list.push_back(p);
+		if (tabu_set.count(p) == 0) {
+			tabu_set.insert(p);
+			tabu_list.push_back(p);
+		}
 		double cost_value = cost(p);
 		if (cost_value < cost(best_p)) {
 			best_p = p;
@@ -47,6 +53,9 @@ Graph tabu_search(std::function<double(Graph)> cost,
 			tabu_set.erase(tabu_list.front());
 			tabu_list.pop_front();
 		}
+
+		std::cout << "tabu set size: " << tabu_set.size() << std::endl;
+		std::cout << "tabu list size: " << tabu_list.size() << std::endl;
 	}
 	return best_p;
 }

@@ -120,12 +120,17 @@ std::ostream& operator<<(std::ostream& o, Graph ig) {
 }
 
 bool operator < (const Graph& g1, const Graph& g2)  {
-	int valg1 = 0;
-	int valg2 = 0;
-	for (int i = 0; i < g1.vertices.size(); i++)
-		valg1 += g1.vertices[i] * std::pow(10, i);
-	for (int i = 0; i < g2.vertices.size(); i++)
-		valg2 += g1.vertices[i] * std::pow(10, i);
-	return valg1 < valg2;
+	bool isSmaller = false;
+	if (g1.vertices.size() < g2.vertices.size())
+		isSmaller = true;
+	if (g1.vertices.size() == g2.vertices.size()) {
+		for (int i = 0; i < g1.vertices.size(); i++) {
+			if (g1.vertices[i] == g2.vertices[i])
+				continue;
+			isSmaller = g1.vertices[i] < g2.vertices[i];
+			break;
+		}
+	}
+	return isSmaller;
 }
 
