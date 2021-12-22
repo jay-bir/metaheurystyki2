@@ -8,9 +8,7 @@
 #include "Graph.h"
 #include "graph_coloring_problem.h"
 
-//================================================
-//TODO refactor everything for graph vertices
-//================================================
+
 
 std::random_device garDevice;
 std::mt19937 gaRandgen(garDevice());
@@ -70,13 +68,13 @@ std::vector<Graph> genetic_algorithm(
 	std::function<std::vector<Graph>(std::vector<Graph>, std::vector<double>)> par_selection,
 	std::function<std::vector<Graph>(double, Graph, Graph)> crossover,
 	std::function<Graph(double, Graph)> mutation,
-	std::function<bool(int)> finish) {
+	std::function<bool(int, std::vector<Graph>)> finish) {
 
 
 	std::vector<double> pop_fit;
 
 
-	while (!finish(iterations--)) {
+	while (!finish(iterations--, population)) {
 		for (int i = 0; i < population.size(); i++) {
 			pop_fit.push_back(fitness(population[i]));
 		}

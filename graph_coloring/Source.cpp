@@ -71,7 +71,7 @@ int main() {
 		fit_func,
 		roulette_selection,
 		one_point_crossover,
-		uniform_mutation, [](int i){
+		uniform_mutation, [](int i, std::vector<Graph> g){
 		return !(i > 0);
 	});
 
